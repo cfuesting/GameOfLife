@@ -9,9 +9,12 @@ Eine interaktive Browser-Implementierung von Conways Game of Life - einem klassi
 - 🖱️ Fahre mit der Maus über Zellen, um sie interaktiv zu bearbeiten (Optional: Shift-Taste gedrückt halten)
 - ⚙️ Regelbare Geschwindigkeit der Simulation
 - 📊 Live-Statistiken (Generation & lebende Zellen)
-- 🔄 Verschiedene Gittergrößen (20x20 bis 100x100)
+- 🔄 Verschiedene Gittergrößen (10x10 bis 50x50)
 - 📱 Responsive Design für mobile Geräte
 - ⏸️ Start/Pause/Reset Funktionalität
+- 🔊 **Dynamischer Sound basierend auf der Anzahl lebender Zellen** (neu!)
+  - Tonfrequenz passt sich an: 200Hz (keine Zellen) bis 1000Hz (maximale Zellen)
+  - Sound-Schalter zum An- und Ausschalten
 
 ## 🎯 Wie es funktioniert
 
@@ -30,6 +33,7 @@ Das Game of Life basiert auf vier einfachen Regeln:
 4. **Starte** die Simulation mit dem "Start"-Button
 5. **Beobachte**, wie Zellen basierend auf den Regeln entstehen und vergehen
 6. **Passe** die Geschwindigkeit und Gittersize an
+7. **Höre** den dynamischen Sound, der sich mit der Zellzahl ändert (kann mit "Sound An/Aus"-Button aktiviert/deaktiviert werden)
 
 ## 📁 Dateistruktur
 
@@ -47,6 +51,22 @@ GameOfLife/
 - **CSS3** - Styling mit Gradients und Flexbox
 - **Vanilla JavaScript** - Komplette Game-Logik (keine Dependencies!)
 - **Canvas API** - Rendering
+- **Web Audio API** - Dynamische Sound-Erzeugung
+
+## 🎵 Sound-System
+
+Das Sound-System nutzt die Web Audio API zur Erzeugung von Sinustönen:
+
+- **Frequenzberechnung**: `200Hz + (lebende_zellen / max_zellen) × 800Hz`
+- **Wellenform**: Sinuswelle für sanfte Töne
+- **Duration**: 100ms pro Update für kontinuierliches Feedback
+- **Lautstärke**: Exponentieller Envelope (schneller Anstieg, exponentieller Abfall)
+
+Beispiele:
+- 0 lebende Zellen → 200 Hz (tiefe Töne)
+- 25% lebende Zellen → 400 Hz (mittlere Töne)
+- 50% lebende Zellen → 600 Hz (höhere Töne)
+- 100% lebende Zellen → 1000 Hz (sehr hohe Töne)
 
 ## 💡 Beispiel Muster
 
