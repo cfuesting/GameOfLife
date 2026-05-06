@@ -9,15 +9,61 @@ class GameOfLife {
         this.animationId = null;
         this.isMouseDown = false; // Verfolgung des Maus-Status
         this.shiftPressed = false; // Verfolgung der Shift-Taste
+        this.soundEnabled = true; // Sound-Status
+        
+        // Audio Context für Sound-Effekte
+        this.audioContext = null;
+        this.oscillator = null;
+        this.gainNode = null;
         
         // Canvas setup
         this.canvas = document.getElementById('gameCanvas');
         this.ctx = this.canvas.getContext('2d');
         
+        this.initializeAudio();
         this.initializeGrid();
         this.setupCanvas();
         this.setupEventListeners();
         this.draw();
+    }
+    
+    initializeAudio() {
+        // Initialisiert den Audio Context
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) {
+            this.audioContext = new AudioContext();
+        }
+    }
+    
+    playSound(liveCells) {
+        if (!this.soundEnabled || !this.audioContext) return;
+        
+        // Berechne Frequenz basierend auf Anzahl lebender Zellen
+        // Bereich: 200Hz (0 Zellen) bis 1000Hz (maximale Zellen)
+        const maxCells = this.gridSize * this.gridSize;
+        const frequency = 200 + (liveCells / maxCells) * 800;
+        
+        // Stoppe bestehenden Ton
+        if (this.oscillator) {
+            this.oscillator.stop();
+        }
+        
+        // Erstelle neuen Oszillator
+        this.oscillator = this.audioContext.createOscillator();
+        this.gainNode = this.audioContext.createGain();
+        
+        this.oscillator.type = 'sine'; // Wellenform
+        this.oscillator.frequency.value = frequency;
+        
+        // Lautstärke-Envelope
+        this.gainNode.gain.setValueAtTime(0.1, this.audioContext.currentTime);
+        this.gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.1);
+        
+        this.oscillator.connect(this.gainNode);
+        this.gainNode.connect(this.audioContext.destination);
+        
+        this.oscillator.start(this.audioContext.currentTime);
+        this.oscillator.stop(this.audioContext.currentTime + 0.1);
     }
     
     initializeGrid() {
@@ -136,6 +182,10 @@ class GameOfLife {
         
         this.grid = this.nextGrid;
         this.generation++;
+        
+        // Sound basierend auf lebenden Zellen abspielen
+        const liveCells = this.getLiveCount();
+        this.playSound(liveCells);
     }
     
     countNeighbors(row, col) {
@@ -216,6 +266,11 @@ class GameOfLife {
         this.speed = 275 - speed; // Invertiert: höherer Slider-Wert = schneller (doubled speed)
     }
     
+    toggleSound() {
+        this.soundEnabled = !this.soundEnabled;
+        return this.soundEnabled;
+    }
+    
     getLiveCount() {
         let count = 0;
         for (let i = 0; i < this.gridSize; i++) {
@@ -249,6 +304,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     document.getElementById('resetBtn').addEventListener('click', () => {
         game.reset();
+    });
+    
+    document.getElementById('soundBtn').addEventListener('click', () => {
+        const isEnabled = game.toggleSound();
+        const btn = document.getElementById('soundBtn');
+        btn.textContent = isEnabled ? '🔊 Sound An' : '🔇 Sound Aus';
+        btn.classList.toggle('sound-off', !isEnabled);
     });
     
     // Speed Control
