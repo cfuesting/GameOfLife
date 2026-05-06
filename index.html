@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff1493 0%, #ff8c00 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -45,7 +45,7 @@
         }
 
         #gameCanvas {
-            border: 2px solid #667eea;
+            border: 2px solid #ff1493;
             border-radius: 5px;
             display: block;
             margin: 0 auto 30px;
@@ -84,33 +84,33 @@
         }
 
         #startBtn {
-            background-color: #667eea;
+            background-color: #ff1493;
         }
 
         #startBtn:hover {
-            background-color: #5568d3;
+            background-color: #e60f7f;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
         }
 
         #pauseBtn {
-            background-color: #f59e0b;
+            background-color: #ff8c00;
         }
 
         #pauseBtn:hover {
-            background-color: #d97706;
+            background-color: #e67e00;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.4);
+            box-shadow: 0 5px 15px rgba(255, 140, 0, 0.4);
         }
 
         #resetBtn {
-            background-color: #ef4444;
+            background-color: #ff1493;
         }
 
         #resetBtn:hover {
-            background-color: #dc2626;
+            background-color: #e60f7f;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4);
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
         }
 
         .button-group {
@@ -138,7 +138,7 @@
         input[type="number"]:focus,
         select:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #ff1493;
         }
 
         .speed-control {
@@ -154,7 +154,7 @@
         #speedValue {
             min-width: 50px;
             font-weight: 600;
-            color: #667eea;
+            color: #ff1493;
         }
 
         .stats {
@@ -182,12 +182,12 @@
         .stat-value {
             font-size: 1.8em;
             font-weight: 700;
-            color: #667eea;
+            color: #ff1493;
         }
 
         .info {
-            background-color: #eff6ff;
-            border-left: 4px solid #667eea;
+            background-color: #fff1f5;
+            border-left: 4px solid #ff1493;
             padding: 15px;
             border-radius: 5px;
             margin-top: 20px;
@@ -197,7 +197,7 @@
         }
 
         .info strong {
-            color: #667eea;
+            color: #ff1493;
         }
 
         @media (max-width: 600px) {
@@ -240,8 +240,8 @@
             <div class="control-group">
                 <label for="speed">Geschwindigkeit</label>
                 <div class="speed-control">
-                    <input type="range" id="speed" min="1" max="500" value="250">
-                    <span id="speedValue">250ms</span>
+                    <input type="range" id="speed" min="1" max="250" value="125">
+                    <span id="speedValue">125ms</span>
                 </div>
             </div>
 
