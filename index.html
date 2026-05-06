@@ -113,6 +113,24 @@
             box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
         }
 
+        #soundBtn {
+            background-color: #10b981;
+        }
+
+        #soundBtn:hover {
+            background-color: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        #soundBtn.sound-off {
+            background-color: #ef4444;
+        }
+
+        #soundBtn.sound-off:hover {
+            background-color: #dc2626;
+        }
+
         .button-group {
             display: flex;
             gap: 10px;
@@ -235,6 +253,7 @@
                 <button id="startBtn">▶ Start</button>
                 <button id="pauseBtn">⏸ Pause</button>
                 <button id="resetBtn">↻ Zurücksetzen</button>
+                <button id="soundBtn">🔊 Sound An</button>
             </div>
 
             <div class="control-group">
@@ -272,7 +291,8 @@
             <strong>Wie es funktioniert:</strong><br>
             • Klicke auf Zellen, um sie ein/aus zu schalten<br>
             • Starte die Simulation mit dem Start-Button<br>
-            • Konways Regeln: Eine lebende Zelle mit 2-3 Nachbarn überlebt, eine tote Zelle mit genau 3 Nachbarn wird lebendig
+            • Konways Regeln: Eine lebende Zelle mit 2-3 Nachbarn überlebt, eine tote Zelle mit genau 3 Nachbarn wird lebendig<br>
+            • Der Sound passt sich an die Anzahl der lebenden Zellen an (200Hz - 1000Hz)
         </div>
     </div>
 
