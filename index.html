@@ -142,6 +142,42 @@
             min-width: 100px;
         }
 
+        .patterns {
+            margin-bottom: 20px;
+        }
+
+        .pattern-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .pattern-btn {
+            padding: 12px 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            border: none;
+            border-radius: 5px;
+            cursor: grab;
+            transition: all 0.3s ease;
+            color: white;
+            background-color: #4f46e5;
+        }
+
+        .pattern-btn:hover {
+            background-color: #4338ca;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
+        }
+
+        .pattern-btn:active,
+        .pattern-btn[dragging] {
+            cursor: grabbing;
+            opacity: 0.7;
+            transform: translateY(0);
+        }
+
         input[type="range"],
         input[type="number"],
         select {
@@ -273,6 +309,14 @@
                     <option value="40">40x40</option>
                     <option value="50">50x50</option>
                 </select>
+            </div>
+        </div>
+
+        <div class="patterns">
+            <div class="pattern-group">
+                <button class="pattern-btn" id="blinkerBtn" draggable="true">Blinker</button>
+                <button class="pattern-btn" id="beaconBtn" draggable="true">Beacon</button>
+                <button class="pattern-btn" id="gliderBtn" draggable="true">Glider</button>
             </div>
         </div>
 
