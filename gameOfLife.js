@@ -11,6 +11,13 @@ class GameOfLife {
         this.shiftPressed = false; // Verfolgung der Shift-Taste
         this.soundEnabled = true; // Sound-Status
         
+        // Conway's Game of Life patterns
+        this.patterns = {
+            blinker: [[0,0], [0,1], [0,2]],
+            beacon: [[0,0], [0,1], [1,0], [1,1], [2,2], [2,3], [3,2], [3,3]],
+            glider: [[0,1], [1,2], [2,0], [2,1], [2,2]]
+        };
+        
         // Audio Context für Sound-Effekte
         this.audioContext = null;
         this.oscillator = null;
@@ -120,6 +127,43 @@ class GameOfLife {
             const { row, col } = this.getRowColFromEvent(e);
             this.activateCell(row, col);
         });
+        
+        // Drag and Drop für Patterns
+        this.setupPatternDragAndDrop();
+    }
+    
+    setupPatternDragAndDrop() {
+        // Pattern Button Drag Start
+        Object.keys(this.patterns).forEach(patternName => {
+            const btn = document.getElementById(patternName + 'Btn');
+            if (btn) {
+                btn.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', patternName);
+                    e.dataTransfer.effectAllowed = 'copy';
+                    btn.setAttribute('dragging', 'true');
+                });
+                
+                btn.addEventListener('dragend', () => {
+                    btn.removeAttribute('dragging');
+                });
+            }
+        });
+        
+        // Canvas Drag Over
+        this.canvas.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'copy';
+        });
+        
+        // Canvas Drop
+        this.canvas.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const patternName = e.dataTransfer.getData('text/plain');
+            if (patternName && this.patterns[patternName]) {
+                const { row, col } = this.getRowColFromEvent(e);
+                this.placePattern(patternName, row, col);
+            }
+        });
     }
     
     draw() {
@@ -217,6 +261,27 @@ class GameOfLife {
                 this.grid[row][col] = 1;
                 this.draw();
             }
+        }
+    }
+    
+    placePattern(patternName, startRow, startCol) {
+        if (!this.patterns[patternName] || this.isRunning) return;
+        
+        const pattern = this.patterns[patternName];
+        let placed = false;
+        
+        pattern.forEach(([offsetRow, offsetCol]) => {
+            const row = startRow + offsetRow;
+            const col = startCol + offsetCol;
+            
+            if (row >= 0 && row < this.gridSize && col >= 0 && col < this.gridSize) {
+                this.grid[row][col] = 1;
+                placed = true;
+            }
+        });
+        
+        if (placed) {
+            this.draw();
         }
     }
     
